@@ -32,6 +32,16 @@ jobs:
       - run: just vendor-test
       - run: just docs
 
+  guest-package:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install packaged Python guest
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install 'hyperlight-sandbox-python-guest==0.7.0'
+      - run: just guest-path-smoke
+
   kvm:
     runs-on: ubuntu-24.04
     steps:
@@ -51,7 +61,7 @@ jobs:
         run: |
           python3 -m venv .venv
           .venv/bin/pip install 'hyperlight-sandbox-python-guest==0.7.0'
-          echo "HYPERLIGHT_PYTHON_GUEST=$(.venv/bin/python -c 'from python_guest import path; print(path)')" >> "$GITHUB_ENV"
+          echo "HYPERLIGHT_PYTHON_GUEST=$(.venv/bin/python scripts/verify_python_guest_path.py)" >> "$GITHUB_ENV"
       - run: just kvm-test
 
   links:

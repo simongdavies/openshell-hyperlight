@@ -21,6 +21,10 @@ test:
 vendor-test:
     cargo test --locked --manifest-path vendor/hyperlight-sandbox-src/Cargo.toml -p hyperlight-sandbox --lib
 
+guest-path-smoke python=".venv/bin/python":
+    test -x "{{python}}"
+    "{{python}}" scripts/verify_python_guest_path.py
+
 kvm-test:
     test -c /dev/kvm
     test -n "${HYPERLIGHT_PYTHON_GUEST:-}"

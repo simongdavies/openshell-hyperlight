@@ -54,7 +54,7 @@ Install the packaged Python guest and print its path:
 python3 -m venv .venv
 .venv/bin/pip install 'hyperlight-sandbox-python-guest==0.7.0'
 PYTHON_GUEST="$(
-  .venv/bin/python -c 'from python_guest import path; print(path)'
+  .venv/bin/python -c 'from python_guest.path import get_module_path; print(get_module_path())'
 )"
 test -r "$PYTHON_GUEST"
 ```
@@ -139,6 +139,7 @@ just build
 just clippy
 just test
 just vendor-test
+just guest-path-smoke
 ```
 
 The real Hyperlight integration test is separate:
