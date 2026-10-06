@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: "1"
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust
+        run: |
+          rustup toolchain install nightly-2026-10-06 --profile minimal --component clippy,rustfmt
+          rustup default nightly-2026-10-06
+          rustup target add x86_64-pc-windows-gnu
+      - name: Install MinGW
+        run: sudo apt-get update && sudo apt-get install --yes --no-install-recommends gcc-mingw-w64-x86-64
+      - run: just fmt-check
+      - run: just build
+      - run: just clippy
+      - run: just clippyw
+      - run: just test
+      - run: just vendor-test
+      - run: just docs
+
+  kvm:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust
+        run: |
+          rustup toolchain install nightly-2026-10-06 --profile minimal
+          rustup default nightly-2026-10-06
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          sudo chmod 666 /dev/kvm
+          test -c /dev/kvm
+      - name: Install packaged Python guest
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install 'hyperlight-sandbox-python-guest==0.7.0'
+          echo "HYPERLIGHT_PYTHON_GUEST=$(.venv/bin/python -c 'from python_guest import path; print(path)')" >> "$GITHUB_ENV"
+      - run: just kvm-test
+
+  links:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: lycheeverse/lychee-action@885c65f3dc543b57c898c8099f4e08c8afd178a2 # v2.6.1
+        with:
+          args: --no-progress --offline './**/*.md'
+          fail: true
+
+  workflows:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: rhysd/actionlint@03d0035246f3e81f36aed592ffb4bebf33a03106 # v1.7.7
+
+  dependency-policy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust
+        run: |
+          rustup toolchain install nightly-2026-10-06 --profile minimal
+          rustup default nightly-2026-10-06
+      - name: Install checks
+        run: |
+          cargo install cargo-audit --locked --version 0.22.2
+          cargo install cargo-deny --locked --version 0.20.2
+      - run: just audit
+      - run: just deny

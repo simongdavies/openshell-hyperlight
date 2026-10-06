@@ -1,0 +1,22 @@
+[workspace]
+members = [
+	"src/hyperlight_sandbox",
+	"src/wasm_sandbox",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.7.0"
+edition = "2024"
+rust-version = "1.94"
+license = "Apache-2.0"
+repository = "https://github.com/hyperlight-dev/hyperlight-sandbox"
+keywords = ["hyperlight", "isolation", "sandbox", "wasm"]
+categories = ["virtualization"]
+
+[workspace.dependencies]
+hyperlight-sandbox = { version = "0.7.0", path = "src/hyperlight_sandbox" }
+hyperlight-common = { version = "0.17.0", default-features = false }
+hyperlight-component-macro = "0.17.0"
+hyperlight-host = { version = "0.17.0", default-features = false, features = ["executable_heap"] }
+hyperlight-wasm = "0.15.0"

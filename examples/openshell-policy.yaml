@@ -1,0 +1,32 @@
+version: 1
+filesystem_policy:
+  include_workdir: false
+  read_only:
+    - /usr/local/bin/openshell-hyperlight
+    - /opt/openshell-hyperlight/python-sandbox.aot
+    - /workspace/input
+  read_write:
+    - /workspace/output
+landlock:
+  compatibility: hard_requirement
+process:
+  run_as_user: sandbox
+  run_as_group: sandbox
+
+# Add network_policies only when the JSON request also grants network access.
+# Replace the host, port, protocol rules, and binary path with exact deployment
+# values. OpenShell and Hyperlight evaluate their policies independently.
+#
+# network_policies:
+#   adapter_example:
+#     endpoints:
+#       - host: example.com
+#         port: 443
+#         protocol: rest
+#         enforcement: enforce
+#         rules:
+#           - allow:
+#               method: GET
+#               path: /**
+#     binaries:
+#       - path: /usr/local/bin/openshell-hyperlight

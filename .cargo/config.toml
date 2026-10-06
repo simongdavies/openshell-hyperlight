@@ -1,0 +1,2 @@
+[env]
+WIT_WORLD = { value = "vendor/hyperlight-sandbox-src/src/wasm_sandbox/wit/sandbox-world.wasm", relative = true }

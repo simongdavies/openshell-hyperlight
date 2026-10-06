@@ -1,0 +1,15 @@
+OpenShell Hyperlight Adapter
+Copyright 2026 Simon Davies
+
+This product includes software developed by the Hyperlight project
+(https://github.com/hyperlight-dev), used under the Apache License 2.0. The
+vendored Hyperlight Sandbox WIT interface is copied from commit
+e38f49d149111f66ee2265c6d6c216fab62d018c. The minimal vendored Rust source is
+from the same commit and carries a documented dependency-manifest modification.
+
+This product is designed to interoperate with NVIDIA OpenShell
+(https://github.com/NVIDIA/OpenShell), which is licensed under the Apache
+License 2.0. OpenShell is not included in this distribution.
+
+Hyperlight and OpenShell are names of their respective projects. This project
+is independent and is not endorsed by their maintainers.

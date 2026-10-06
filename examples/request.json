@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "code": "print(sum(i * i for i in range(5)))",
+  "capabilities": {
+    "network": [],
+    "filesystem": null,
+    "tools": []
+  },
+  "limits": {
+    "timeout_ms": 30000,
+    "max_stdout_bytes": 65536,
+    "max_stderr_bytes": 65536,
+    "heap_bytes": 67108864,
+    "stack_bytes": 134217728
+  }
+}
