@@ -1438,6 +1438,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "hyperlight-common"
+version = "0.18.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "360d5876788b26af66bf055bca6b4f2c9c930a0fdcaebda4bd7f808c6bd93068"
+dependencies = [
+ "anyhow",
+ "bitflags 2.13.2",
+ "bytemuck",
+ "bytes",
+ "fixedbitset",
+ "flatbuffers",
+ "log",
+ "smallvec",
+ "spin 0.12.3",
+ "thiserror",
+ "tracing-core",
+]
+
+[[package]]
 name = "hyperlight-component-macro"
 version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1478,7 +1497,7 @@ checksum = "816f673f3f8ef6d5703796bf92927b85177ad1baac6f391551a88451a9e46a7e"
 dependencies = [
  "anyhow",
  "flatbuffers",
- "hyperlight-common",
+ "hyperlight-common 0.17.0",
  "serde_json",
  "tracing",
 ]
@@ -1491,7 +1510,7 @@ checksum = "9c2d0ea739be89822992706da9dc6812ce359b654b328efd6141ba1549751907"
 dependencies = [
  "buddy_system_allocator",
  "flatbuffers",
- "hyperlight-common",
+ "hyperlight-common 0.17.0",
  "hyperlight-guest",
  "hyperlight-guest-macro",
  "hyperlight-guest-tracing",
@@ -1520,7 +1539,7 @@ version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8f43a3d5d3fa245ce0fccee8a48ad7d94ec479e0898fc8f91fd440a1d65830c6"
 dependencies = [
- "hyperlight-common",
+ "hyperlight-common 0.17.0",
  "spin 0.12.3",
  "tracing",
  "tracing-core",
@@ -1544,7 +1563,7 @@ dependencies = [
  "flatbuffers",
  "goblin",
  "hex",
- "hyperlight-common",
+ "hyperlight-common 0.17.0",
  "kvm-bindings",
  "kvm-ioctls",
  "lazy_static",
@@ -1623,7 +1642,7 @@ dependencies = [
  "chrono",
  "env_logger",
  "goblin",
- "hyperlight-common",
+ "hyperlight-common 0.17.0",
  "hyperlight-host",
  "hyperlight-wasm-runtime",
  "junction",
@@ -1662,7 +1681,7 @@ dependencies = [
  "cc",
  "cfg-if",
  "cfg_aliases",
- "hyperlight-common",
+ "hyperlight-common 0.17.0",
  "hyperlight-guest",
  "hyperlight-guest-bin",
  "hyperlight-wasm-macro",
@@ -1681,7 +1700,7 @@ dependencies = [
  "http",
  "http-body",
  "http-body-util",
- "hyperlight-common",
+ "hyperlight-common 0.18.0",
  "hyperlight-component-macro",
  "hyperlight-host",
  "hyperlight-sandbox",
